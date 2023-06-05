@@ -3,8 +3,9 @@ import {createContext, useContext, useState, useEffect} from "react";
 const AppContext = createContext();
 
 const getinitialThemeMode = () => {
-  const preferedMode = window.matchMedia('(prefers-color-scheme:dark)').matches
-  return preferedMode;
+  const preferedMode = window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const InitialDarkTheme = localStorage.getItem('darkTheme') === 'true';
+  return InitialDarkTheme || preferedMode;
 };
 
 export const AppProvider = ({children}) => {
@@ -14,7 +15,7 @@ export const AppProvider = ({children}) => {
   const toggleDarkTheme = () =>{
     const newDarkTheme = !isDarkTheme;
     setIsDarkTheme(newDarkTheme)
-
+    localStorage.setItem('darkTheme', newDarkTheme)
   }
 
   useEffect(() => {
